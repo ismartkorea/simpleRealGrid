@@ -3,9 +3,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="product" type="com.products.model.Product" />
+		<typeAlias alias="process" type="com.products.model.Process" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="com/products/mapper/ProductsMapper.xml"/>
+		<mapper resource="com/products/mapper/ProcessMapper.xml"/>
 	</mappers>
 </configuration>

@@ -39,7 +39,9 @@ public class ProductsController {
 	
 	@RequestMapping(value="/insertProducts.do")
 	public @ResponseBody int insertProduct(@ModelAttribute Product product){
+		System.out.println(">>>>> insertProduct.do <<<");
 		int num = proService.addProduct(product);
+		System.out.println(">>>>> insertProduct.do num : " + num + " <<<");
 		return num;
 	}
 	
