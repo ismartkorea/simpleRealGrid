@@ -1,6 +1,6 @@
 package com.products.model;
 
-public class Product {
+public class ProductModel {
 	private int price;
 	private String unit;
 	private String code;

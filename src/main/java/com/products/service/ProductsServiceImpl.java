@@ -7,18 +7,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.products.dao.ProductsDao;
-import com.products.model.Product;
+import com.products.model.ProductModel;
 
 @Service("productsService")
 public class ProductsServiceImpl implements ProductsService {
 	@Autowired ProductsDao proDao;
 	
 	@Transactional
-	public int addAllProduct(List<Product> pdList) {
+	public int addAllProduct(List<ProductModel> pdList) {
 		
 		int num = 0;
 		
-		for(Product product : pdList){
+		for(ProductModel product : pdList){
 			if(product.getState().equals("created"))
 				num += proDao.addProduct(product);
 			else if(product.getState().equals("updated"))
@@ -29,15 +29,15 @@ public class ProductsServiceImpl implements ProductsService {
 		return num;
 	}
 	
-	public List<Product> getProductList() {
+	public List<ProductModel> getProductList() {
 		return proDao.getProductList();
 	}
 
-	public int addProduct(Product product) {
+	public int addProduct(ProductModel product) {
 		return proDao.addProduct(product);
 	}
 
-	public int updateProduct(Product product) {
+	public int updateProduct(ProductModel product) {
 		return proDao.updateProduct(product);
 	}
 

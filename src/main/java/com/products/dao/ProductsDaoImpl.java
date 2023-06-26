@@ -6,21 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.products.dao.mapper.ProductsMapper;
-import com.products.model.Product;
+import com.products.model.ProductModel;
 
 @Repository
 public class ProductsDaoImpl implements ProductsDao {
 	@Autowired ProductsMapper proMapper;
 	
-	public List<Product> getProductList() {
+	public List<ProductModel> getProductList() {
 		return proMapper.getProductList();
 	}
 
-	public int addProduct(Product product) {
+	public int addProduct(ProductModel product) {
 		return proMapper.addProduct(product);
 	}
 
-	public int updateProduct(Product product) {
+	public int updateProduct(ProductModel product) {
 		return proMapper.updateProduct(product);
 	}
 	

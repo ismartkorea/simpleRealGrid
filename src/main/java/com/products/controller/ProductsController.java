@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.products.model.Product;
+import com.products.model.ProductModel;
 import com.products.service.ProductsService;
 
 
@@ -30,15 +30,15 @@ public class ProductsController {
 	public void openPage(){	}
 	
 	@RequestMapping(value="/getProducts.do")
-	public @ResponseBody List<Product> productlList(){
+	public @ResponseBody List<ProductModel> productlList(){
 		System.out.println(">>>>> getProducts.do <<<");
-		List<Product> product = productsService.getProductList();
+		List<ProductModel> product = productsService.getProductList();
 		System.out.println(">>>>> getProducts.do : product <<<");
 		return product;
 	}
 	
 	@RequestMapping(value="/insertProducts.do")
-	public @ResponseBody int insertProduct(@ModelAttribute Product product){
+	public @ResponseBody int insertProduct(@ModelAttribute ProductModel product){
 		System.out.println(">>>>> insertProduct.do <<<");
 		int num = productsService.addProduct(product);
 		System.out.println(">>>>> insertProduct.do num : " + num + " <<<");
@@ -46,7 +46,7 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(value="/updateProducts.do")
-	public @ResponseBody int updateProduct(@ModelAttribute Product product){
+	public @ResponseBody int updateProduct(@ModelAttribute ProductModel product){
 		return productsService.updateProduct(product);
 	}
 	
@@ -57,11 +57,11 @@ public class ProductsController {
 	
 	@RequestMapping(value="/allSaveProducts.do",method=RequestMethod.POST)
 	public @ResponseBody int allSave(@RequestBody String pdStringList){
-		List<Product> pdList = new ArrayList<Product>();
+		List<ProductModel> pdList = new ArrayList<ProductModel>();
 		JSONArray productJson = JSONArray.fromObject(JSONSerializer.toJSON(pdStringList));
 		
 		for(int i = 0; i < productJson.size(); i++){
-			Product pd = (Product)JSONObject.toBean(productJson.getJSONObject(i), Product.class);
+			ProductModel pd = (ProductModel)JSONObject.toBean(productJson.getJSONObject(i), ProductModel.class);
 			pdList.add(pd);
 		}
 		
