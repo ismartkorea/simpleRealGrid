@@ -11,7 +11,7 @@ import com.products.model.ProcessModel;
 
 @Service("processService")
 public class ProcessServiceImpl implements ProcessService {
-	@Autowired ProcessDao proDao;
+	@Autowired ProcessDao processDao;
 	
 	@Transactional
 	public int addAllProcess(List<ProcessModel> pdList) {
@@ -20,28 +20,28 @@ public class ProcessServiceImpl implements ProcessService {
 		
 		for(ProcessModel process : pdList){
 			if(process.getState().equals("created"))
-				num += proDao.addProcess(process);
+				num += processDao.addProcess(process);
 			else if(process.getState().equals("updated"))
-				num += proDao.updateProcess(process);
+				num += processDao.updateProcess(process);
 			else if(process.getState().equals("deleted"))
-				num += proDao.delProcess(process.getProcess1());
+				num += processDao.delProcess(process.getProcess1());
 		}
 		return num;
 	}
 	
 	public List<ProcessModel> getProcessList() {
-		return proDao.getProcessList();
+		return processDao.getProcessList();
 	}
 
 	public int addProcess(ProcessModel process) {
-		return proDao.addProcess(process);
+		return processDao.addProcess(process);
 	}
 
 	public int updateProcess(ProcessModel process) {
-		return proDao.updateProcess(process);
+		return processDao.updateProcess(process);
 	}
 
 	public int delProcess(String process) {
-		return proDao.delProcess(process);
+		return processDao.delProcess(process);
 	}
 }
