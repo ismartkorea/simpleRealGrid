@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.products.dao.ProductsDao;
 import com.products.model.Product;
 
-@Service
+@Service("productsService")
 public class ProductsServiceImpl implements ProductsService {
 	@Autowired ProductsDao proDao;
 	

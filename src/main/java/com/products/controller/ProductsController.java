@@ -24,7 +24,7 @@ import com.products.service.ProductsService;
 
 @Controller
 public class ProductsController {
-	@Autowired ProductsService proService;
+	@Autowired ProductsService productsService;
 	
 	@RequestMapping(value="/default.do", method=RequestMethod.GET)
 	public void openPage(){	}
@@ -32,7 +32,7 @@ public class ProductsController {
 	@RequestMapping(value="/getProducts.do")
 	public @ResponseBody List<Product> productlList(){
 		System.out.println(">>>>> getProducts.do <<<");
-		List<Product> product = proService.getProductList();
+		List<Product> product = productsService.getProductList();
 		System.out.println(">>>>> getProducts.do : product <<<");
 		return product;
 	}
@@ -40,19 +40,19 @@ public class ProductsController {
 	@RequestMapping(value="/insertProducts.do")
 	public @ResponseBody int insertProduct(@ModelAttribute Product product){
 		System.out.println(">>>>> insertProduct.do <<<");
-		int num = proService.addProduct(product);
+		int num = productsService.addProduct(product);
 		System.out.println(">>>>> insertProduct.do num : " + num + " <<<");
 		return num;
 	}
 	
 	@RequestMapping(value="/updateProducts.do")
 	public @ResponseBody int updateProduct(@ModelAttribute Product product){
-		return proService.updateProduct(product);
+		return productsService.updateProduct(product);
 	}
 	
 	@RequestMapping(value="/deleteProducts.do")
 	public @ResponseBody int delProduct(@RequestParam String code){
-		return proService.delProduct(code);
+		return productsService.delProduct(code);
 	}
 	
 	@RequestMapping(value="/allSaveProducts.do",method=RequestMethod.POST)
@@ -65,12 +65,12 @@ public class ProductsController {
 			pdList.add(pd);
 		}
 		
-		return proService.addAllProduct(pdList);
+		return productsService.addAllProduct(pdList);
 	}
 	
 	@RequestMapping(value="/getProducts2.do")
 	public @ResponseBody Map<?,?> productlList(ModelMap model) {
-	        model.put("results", proService.getProductList());
+	        model.put("results", productsService.getProductList());
 	        return model;
 	}
 }
