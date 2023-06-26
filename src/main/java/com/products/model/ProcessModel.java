@@ -6,6 +6,7 @@ public class ProcessModel {
 	private String task1;
 	private String job1;
 	private String etc;
+	private String state;
 	
 	public String getProcess1() {
 		return process1;
@@ -36,6 +37,12 @@ public class ProcessModel {
 	}
 	public void setEtc(String etc) {
 		this.etc = etc;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.products.dao.mapper.ProductsMapper">
+<mapper namespace="com.products.dao.mapper.ProcessMapper">
 
-	<insert id="addProduct" parameterType="product" >
-		INSERT INTO Products 
-		VALUES(#{code},#{productName},#{volumne},#{unit},#{price})
+	<insert id="addProcess" parameterType="processModel" >
+		INSERT INTO Process 
+		VALUES(#{process},#{processParent},#{task},#{job},#{etc})
 	</insert>
 	
-	<update id="updateProduct" parameterType="product" >
-		UPDATE Products
+	<update id="updateProcess" parameterType="processModel" >
+		UPDATE Process
 		SET 
-			productName = #{productName},
-			volumne = #{volumne},
-			unit = #{unit},
-			price = #{price}
-		WHERE code = #{code}
+			processParent = #{volume},
+			task1 = #{unit},
+			job1 = #{price},
+			etc = #{etc},
+		WHERE process1 = #{process}
 	</update>
 	
-	<delete id="delProduct" parameterType="String" >
-		DELETE Products
-		WHERE code = #{code}
+	<delete id="delProcess" parameterType="String" >
+		DELETE Process
+		WHERE process1 = #{process}
 	</delete>
 	
 </mapper>

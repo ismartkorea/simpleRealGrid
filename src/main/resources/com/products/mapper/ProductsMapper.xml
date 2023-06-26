@@ -5,14 +5,14 @@
 
 	<insert id="addProduct" parameterType="product" >
 		INSERT INTO Products 
-		VALUES(#{code},#{productName},#{volumne},#{unit},#{price})
+		VALUES(#{code},#{productName},#{volume},#{unit},#{price})
 	</insert>
 	
 	<update id="updateProduct" parameterType="product" >
 		UPDATE Products
 		SET 
 			productName = #{productName},
-			volumne = #{volumne},
+			volume = #{volume},
 			unit = #{unit},
 			price = #{price}
 		WHERE code = #{code}

@@ -6,42 +6,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.products.dao.ProductsDao;
-import com.products.model.Product;
+import com.products.dao.ProcessDao;
+import com.products.model.ProcessModel;
 
 @Service
-public class ProcessServiceImpl implements ProductsService {
-	@Autowired ProductsDao proDao;
+public class ProcessServiceImpl implements ProcessService {
+	@Autowired ProcessDao proDao;
 	
 	@Transactional
-	public int addAllProduct(List<Product> pdList) {
+	public int addAllProcess(List<ProcessModel> pdList) {
 		
 		int num = 0;
 		
-		for(Product product : pdList){
-			if(product.getState().equals("created"))
-				num += proDao.addProduct(product);
-			else if(product.getState().equals("updated"))
-				num += proDao.updateProduct(product);
-			else if(product.getState().equals("deleted"))
-				num += proDao.delProduct(product.getCode());
+		for(ProcessModel process : pdList){
+			if(process.getState().equals("created"))
+				num += proDao.addProcess(process);
+			else if(process.getState().equals("updated"))
+				num += proDao.updateProcess(process);
+			else if(process.getState().equals("deleted"))
+				num += proDao.delProcess(process.getProcess1());
 		}
 		return num;
 	}
 	
-	public List<Product> getProductList() {
-		return proDao.getProductList();
+	public List<ProcessModel> getProcessList() {
+		return proDao.getProcessList();
 	}
 
-	public int addProduct(Product product) {
-		return proDao.addProduct(product);
+	public int addProcess(ProcessModel process) {
+		return proDao.addProcess(process);
 	}
 
-	public int updateProduct(Product product) {
-		return proDao.updateProduct(product);
+	public int updateProcess(ProcessModel process) {
+		return proDao.updateProcess(process);
 	}
 
-	public int delProduct(String code) {
-		return proDao.delProduct(code);
+	public int delProcess(String process) {
+		return proDao.delProcess(process);
 	}
 }

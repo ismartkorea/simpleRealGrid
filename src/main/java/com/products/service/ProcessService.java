@@ -12,5 +12,5 @@ public interface ProcessService {
 	
 	public int addProcess(ProcessModel product);
 	public int updateProcess(ProcessModel product);
-	public int delProcess(String code);
+	public int delProcess(String process);
 }
