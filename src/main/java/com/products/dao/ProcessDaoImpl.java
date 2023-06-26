@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.products.dao.mapper.ProcessMapper;
 import com.products.model.ProcessModel;
-import com.products.model.Product;
 
 @Repository
 public class ProcessDaoImpl implements ProcessDao {
@@ -25,8 +24,8 @@ public class ProcessDaoImpl implements ProcessDao {
 		return processMapper.updateProcess(process);
 	}
 	
-	public int delProcess(String code) {
-		return processMapper.delProcess(code);
+	public int delProcess(String process) {
+		return processMapper.delProcess(process);
 	}
 
 }

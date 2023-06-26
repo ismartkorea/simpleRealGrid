@@ -15,5 +15,5 @@ public interface ProcessMapper {
 	
 	public int updateProcess(ProcessModel process);
 	
-	public int delProcess(String code);
+	public int delProcess(String process);
 }
