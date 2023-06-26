@@ -3,7 +3,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="product" type="com.products.model.Product" />
-		<typeAlias alias="process" type="com.products.model.Process" />
+		<typeAlias alias="process" type="com.products.model.ProcessModel" />
 	</typeAliases>
 	
 	<mappers>
