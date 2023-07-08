@@ -4,7 +4,7 @@ public class ProductModel {
 	private int price;
 	private String unit;
 	private String code;
-	private String volumne;
+	private String volume;
 	private String productName;
 	private String state;
 	
@@ -26,11 +26,11 @@ public class ProductModel {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public String getVolumne() {
-		return volumne;
+	public String getVolume() {
+		return volume;
 	}
-	public void setVolumne(String volumne) {
-		this.volumne = volumne;
+	public void setVolume(String volume) {
+		this.volume = volume;
 	}
 	public String getUnit() {
 		return unit;

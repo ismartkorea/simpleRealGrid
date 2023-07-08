@@ -66,16 +66,15 @@ span {
 	
 	function setFields(provider) {
 		var fields = [ {
-			fieldName : "code"
+			fieldName : "process1"
 		}, {
-			fieldName : "productName"
+			fieldName : "process_parent"
 		}, {
-			fieldName : "volumne"
+			fieldName : "task1"
 		}, {
-			fieldName : "unit"
+			fieldName : "job1"
 		}, {
-			fieldName : "price",
-			dataType : "number"
+			fieldName : "etc"
 		} ];
 
 		if (provider == dataProvider)
@@ -84,49 +83,31 @@ span {
 
 	function setColumns(grid) {
 		var columns = [ {
-			fieldName : "code",
+			fieldName : "task1",
 			width : 80,
 			header : {
-				text : "코드"
+				text : "TASK"
 			},
 			styles : {
 				textAlignment : "near"
 			}
 		}, {
-			fieldName : "productName",
+			fieldName : "job1",
 			width : 80,
 			header : {
-				text : "제품명"
+				text : "JOB"
 			},
 			styles : {
 				textAlignment : "near"
 			}
 		}, {
-			fieldName : "volumne",
+			fieldName : "etc",
 			width : 80,
 			header : {
-				text : "용량"
+				text : "기타"
 			},
 			styles : {
 				textAlignment : "near"
-			}
-		}, {
-			fieldName : "unit",
-			width : 80,
-			header : {
-				text : "단위"
-			},
-			styles : {
-				textAlignment : "near"
-			}
-		}, {
-			fieldName : "price",
-			width : 80,
-			header : {
-				text : "단가"
-			},
-			styles : {
-				textAlignment : "far"
 			}
 		} ];
 
@@ -138,7 +119,7 @@ span {
 		$.ajax({
 			type : "post",
 			dataType : "json",
-			url : "/getProducts.do",
+			url : "/getProcess.do",
 			success : function(data){
 				provider.fillJsonData(data);
 			},
@@ -170,11 +151,11 @@ span {
 
 		var currState = dataProvider.getRowState(currRow);
 		if (currState == "created") {
-			saveData("/insertProducts.do");
+			saveData("/insertProcess.do");
 		} else if (currState == "updated") {
-			saveData("/updateProducts.do");
+			saveData("/updateProcess.do");
 		} else if (currState == "deleted") {
-			saveData("/deleteProducts.do");
+			saveData("/deleteProcess.do");
 		}
 	}
 	
@@ -195,7 +176,7 @@ span {
 	function btnSaveAllDataClickHandler(e) {
 		grdMain.commit();
 
-		savadataAll("/allSaveProducts.do");
+		savadataAll("/allSaveProcess.do");
 	}
 
 	function savadataAll(urlStr) {
