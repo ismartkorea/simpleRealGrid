@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/test/test.do")
-public class TestController {
+@RequestMapping("/test/db/connect.do")
+public class TestDBController {
 	@Autowired private DataSource dataSource;
 	
 	@RequestMapping
