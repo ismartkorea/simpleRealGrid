@@ -27,6 +27,7 @@ span {
 	$(function() {
 		$("#btnInsert").click(btnInsertClickHandler);
 		$("#btnAppend").click(btnAppendClickHandler);
+		$("#btnDelete").click(btnDeleteClickHandler);
 		$("#btnSaveData").click(btnSaveDataClickHandler);
 		$("#btnSaveAllData").click(btnSaveAllDataClickHandler);
 		setupGridJs("grdMain", "100%", "300");
@@ -60,7 +61,7 @@ span {
 		});
 
 		dataProvider.setOptions({
-			softDeleting : true
+			softDeleting : false
 		});
 	}
 	
@@ -83,6 +84,15 @@ span {
 
 	function setColumns(grid) {
 		var columns = [ {
+			fieldName : "process1",
+			width : 80,
+			header : {
+				text : "PROCESS"
+			},
+			styles : {
+				textAlignment : "near"
+			}
+		}, {	
 			fieldName : "task1",
 			width : 80,
 			header : {
@@ -141,6 +151,14 @@ span {
 		grdMain.showEditor();
 		grdMain.setFocus();
 	}
+	
+	function btnDeleteClickHandler(e) {
+		//grdMain.beginAppendRow();
+		var curr = grdMain.getCurrent();
+		dataProvider.removeRow(curr.dataRow);
+		grdMain.showEditor();
+		grdMain.setFocus();
+	}	
 
 	function btnSaveDataClickHandler(e) {
 		grdMain.commit();
@@ -248,6 +266,7 @@ span {
 	
 	<input type="button" id="btnInsert" value="Insert Row" />
 	<input type="button" id="btnAppend" value="Append Row" />
+	<input type="button" id="btnDelete" value="Delete Row" />
 	<input type="button" id="btnSaveData" value="Save Data" />
 	<input type="button" id="btnSaveAllData" value="Save All Data" />
 </body>

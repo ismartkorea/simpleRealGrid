@@ -61,7 +61,7 @@ span {
 		});
 
 		dataProvider.setOptions({
-			softDeleting : true
+			softDeleting : false
 		});
 	}
 	
@@ -163,9 +163,12 @@ span {
 	}
 	
 	function btnDeleteClickHandler(e) {
-		grdMain.beginDeleteRow();
+		var curr = grdMain.getCurrent();
+		dataProvider.removeRow(curr.dataRow);
+		//grdMain.beginDeleteRow();
 		grdMain.showEditor();
-		grdMain.setFocus();
+		grdMain.setFocus();	
+		
 	}	
 
 	function btnSaveDataClickHandler(e) {
