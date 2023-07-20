@@ -152,16 +152,16 @@ var data = [
 	}	
 
 	function btnInsertClickHandler(e) {
-		var curr = grdMain.getCurrent();
-		grdMain.beginInsertRow(Math.max(0, curr.itemIndex));
-		grdMain.showEditor();
-		grdMain.setFocus();
+		//var curr = grdMain.getCurrent();
+		//grdMain.beginInsertRow(Math.max(0, curr.itemIndex));
+		//grdMain.showEditor();
+		//grdMain.setFocus();
 		// 최상위 노드에 행 추가
-		treeDataProvider.addChildRow(
-		  -1,     // parent rowId
-		  [3, "최상위 노드"],
-		  3,      // icon index
-		  false   // children(자식 보유 여부)
+		var curr = grdMain.getCurrent();
+console.log("btnInsertClickHandler curr="+curr.itemIndex);		
+		dataProvider.addChildRow(
+	      curr.dataRow,     // parent rowId
+		  [-1, "Insert 노드"]
 		);		
 		
 		
@@ -169,8 +169,18 @@ var data = [
 	}
 
 	function btnAppendClickHandler(e) {
+		/*
 		grdMain.beginAppendRow();
 		grdMain.showEditor();
+		grdMain.setFocus();
+		*/
+		// 최상위 노드에 행 추가
+        var curr = grdMain.getCurrent();
+console.log("btnAppendClickHandler curr="+curr.itemIndex);		
+		dataProvider.addChildRow(
+          curr.dataRow,     // parent rowId
+		  ["menuName","Append 노드"]
+		);
 		grdMain.setFocus();
 	}
 	
@@ -178,7 +188,7 @@ var data = [
 		var curr = grdMain.getCurrent();
 		dataProvider.removeRow(curr.dataRow);
 		//grdMain.beginDeleteRow();
-		grdMain.showEditor();
+		//grdMain.showEditor();
 		grdMain.setFocus();	
 		
 	}	
