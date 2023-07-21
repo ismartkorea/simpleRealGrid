@@ -201,17 +201,19 @@ console.log("btnAppendClickHandler curr="+curr.itemIndex);
 			return;
 
 		var currState = dataProvider.getRowState(currRow);
+console.log(">>> currState = " + currState);		
 		if (currState == "created") {
-			saveData("/insertProducts.do");
+			saveData("/insertMenu.do");
 		} else if (currState == "updated") {
-			saveData("/updateProducts.do");
+			saveData("/updateMenu.do");
 		} else if (currState == "deleted") {
-			saveData("/deleteProducts.do");
+			saveData("/deleteMenu.do");
 		}
 	}
 	
 	function saveData(urlStr) {
 		var jRowData = dataProvider.getJsonRow(grdMain.getCurrent().dataRow);
+console.log(">>> jRowData = " + JSON.stringify(jRowData));		
 
 		$.post(urlStr, jRowData, function(data) {
 			if (data > 0) {
@@ -227,7 +229,7 @@ console.log("btnAppendClickHandler curr="+curr.itemIndex);
 	function btnSaveAllDataClickHandler(e) {
 		grdMain.commit();
 
-		savadataAll("/allSaveProducts.do");
+		savadataAll("/allSaveMenu.do");
 	}
 
 	function savadataAll(urlStr) {

@@ -4,10 +4,12 @@
 	<typeAliases>
 		<typeAlias alias="product" type="com.products.model.ProductModel" />
 		<typeAlias alias="process" type="com.products.model.ProcessModel" />
+		<typeAlias alias="menu"    type="com.products.model.MenuModel" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="com/products/mapper/ProductsMapper.xml"/>
 		<mapper resource="com/products/mapper/ProcessMapper.xml"/>
+		<mapper resource="com/products/mapper/MenuMapper.xml"/>
 	</mappers>
 </configuration>

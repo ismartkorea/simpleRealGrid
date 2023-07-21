@@ -50,6 +50,11 @@
 	 <bean id="processMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 	 	<property name="mapperInterface" value="com.products.dao.mapper.ProcessMapper" />
 	 	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>	 
+	 
+	 <bean id="menuMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	 	<property name="mapperInterface" value="com.products.dao.mapper.MenuMapper" />
+	 	<property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>	     
 	 
  </beans>
