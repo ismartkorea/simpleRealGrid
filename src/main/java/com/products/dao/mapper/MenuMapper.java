@@ -1,6 +1,7 @@
 package com.products.dao.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 
@@ -15,5 +16,7 @@ public interface MenuMapper {
 	
 	public int updateMenu(MenuModel menu);
 	
-	public int delMenu(String treeNode);
+	public int delMenu(MenuModel menu);
+	
+	public Map<String, Object> getLastOrderNo(Map<String, Object> params);
 }

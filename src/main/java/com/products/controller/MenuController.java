@@ -2,6 +2,7 @@ package com.products.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +30,13 @@ public class MenuController {
 		return "menu";
 	}
 	
-	@RequestMapping(value="/getMenu.do")
-	public @ResponseBody List<MenuModel> menuList(){
-		System.out.println(">>>>> getMenu.do <<<");
-		List<MenuModel> menu = menuService.getMenuList();
-		System.out.println(">>>>> getMenu.do : menu <<<");
-		return menu;
+	@RequestMapping(value="/getMenuList.do")
+	public @ResponseBody List<MenuModel> getMenuList(){
+		System.out.println(">>>>> START getMenuList.do <<<");
+		List<MenuModel> menuList = menuService.getMenuList();
+		//System.out.println(">>>>> menuList.do :" +  menuList.toString() + " <<<");
+		System.out.println(">>>>> END getMenuList.do <<<");
+		return menuList;
 	}
 	
 	@RequestMapping(value="/insertMenu.do")
@@ -51,8 +53,8 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value="/deleteMenu.do")
-	public @ResponseBody int delMenu(@RequestParam String treeNode){
-		return menuService.delMenu(treeNode);
+	public @ResponseBody int delMenu(@ModelAttribute MenuModel menu){
+		return menuService.delMenu(menu);
 	}
 	
 	@RequestMapping(value="/allSaveMenu.do",method=RequestMethod.POST)
@@ -67,4 +69,13 @@ public class MenuController {
 		
 		return menuService.addAllMenu(menuList);
 	}
+	
+	@RequestMapping(value="/getLastOrderNo.do", method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object> getLastOrderNo(@RequestParam Map<String, Object> params){
+		System.out.println(">>>>> START getLastOrderNo.do :: params :: " + params.toString() + " <<<");
+		Map<String, Object> result = menuService.getLastOrderNo(params);
+		//System.out.println(">>>>> menuList.do :" +  menuList.toString() + " <<<");
+		System.out.println(">>>>> END getLastOrderNo.do :: result :: " + result.toString() + " <<<");
+		return result;
+	}	
 }

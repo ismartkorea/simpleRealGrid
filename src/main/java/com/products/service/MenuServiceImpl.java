@@ -1,6 +1,7 @@
 package com.products.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class MenuServiceImpl implements MenuService {
 			else if(menu.getState().equals("updated"))
 				num += menuDao.updateMenu(menu);
 			else if(menu.getState().equals("deleted"))
-				num += menuDao.delMenu(menu.getTreeNode());
+				num += menuDao.delMenu(menu);
 		}
 		return num;
 	}
@@ -42,7 +43,12 @@ public class MenuServiceImpl implements MenuService {
 		return menuDao.updateMenu(menu);
 	}
 
-	public int delMenu(String treeNode) {
-		return menuDao.delMenu(treeNode);
+	public int delMenu(MenuModel menu) {
+		return menuDao.delMenu(menu);
 	}
+	
+	public Map<String, Object> getLastOrderNo(Map<String, Object> params) {
+		return menuDao.getLastOrderNo(params);
+	}
+	
 }

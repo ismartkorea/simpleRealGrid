@@ -50,6 +50,8 @@ var data = [
 		$("#btnDelete").click(btnDeleteClickHandler);
 		$("#btnSaveData").click(btnSaveDataClickHandler);
 		$("#btnSaveAllData").click(btnSaveAllDataClickHandler);
+		$("#btnGetRowData").click(btnGetRowDataClickHandler);
+		$("#btnSearchData").click(btnSearchDataClickHandler);
 		setupGridJs("grdMain", "100%", "300");
 		
 	});
@@ -74,6 +76,7 @@ var data = [
 		grid.setOptions({
 			edit : {
 				insertable : true,
+				editable : true,
 				appendable : true,
 				deletable : true,
 				deleteRowsConfirm : true,
@@ -90,9 +93,15 @@ var data = [
 		var fields = [ {
 			fieldName : "treeNode"
 		}, {
+			fieldName : "treeNodeParent"			
+		}, {
 			fieldName : "menuName"
 		}, {
 			fieldName : "auth"
+		}, {
+			fieldName : "menuLevel"			
+		}, {
+			fieldName : "orderNo"
 		}];
 
 		if (provider == dataProvider)
@@ -123,26 +132,46 @@ var data = [
 	            "trueValues": "Y",
 	            "falseValues": "N"
 	        }
+	    }, {
+	        "name": "menuLevel",
+	        "fieldName": "menuLevel",
+	        "width": 50,
+	        "header": {
+	            "text": "레벨"
+	        },
+        	"editable": true,
+        	"startEditOnClick": true      
+	    }, {
+	        "name": "orderNo",
+	        "fieldName": "orderNo",
+	        "width": 50,
+	        "header": {
+	            "text": "순번"
+	        },
+        	"editable": true,
+        	"startEditOnClick": true	        
 	    }];
 
 		if (grid == grdMain)
 			grid.setColumns(columns);
 	}
-/*	
+	
 	function loadData(provider) {
 		$.ajax({
 			type : "post",
 			dataType : "json",
-			url : "/getProducts.do",
+			url : "/getMenuList.do",
 			success : function(data){
-				provider.fillJsonData(data);
+				//provider.fillJsonData(data);
+				provider.setRows(data, "treeNode", true, "", "");
+				grdMain.expandAll();
 			},
 			error : function(xhr, status, error){
 				alert(error);
 			}
 		});
 	}
-*/	
+/*	
 	function loadData(provider) {
 
 		//provider.fillJsonData(json);
@@ -150,6 +179,25 @@ var data = [
 		provider.setRows(data, "treeNode", true, "", "");
 		grdMain.expandAll();
 	}	
+*/
+	function findMinAndMax(numbers) {
+
+	  // 배열이 비어있는 경우 null 반환
+	  if (numbers.length === 0) {
+	    return null;
+	  }
+
+	  // 숫자 배열 정렬
+	  numbers.sort(function(a, b) {
+	    return a - b;
+	  });
+
+	  // 최소값과 최대값 리턴
+	  return {
+	    min: numbers[0],
+	    max: numbers[numbers.length - 1]
+	  };
+	}
 
 	function btnInsertClickHandler(e) {
 		//var curr = grdMain.getCurrent();
@@ -157,13 +205,62 @@ var data = [
 		//grdMain.showEditor();
 		//grdMain.setFocus();
 		// 최상위 노드에 행 추가
+		var setOrderNo;
+		var setMenuLevel;
 		var curr = grdMain.getCurrent();
-console.log("btnInsertClickHandler curr="+curr.itemIndex);		
+		var currTreeNodeParent = dataProvider.getValue(curr.dataRow, 'treeNodeParent');
+		var currMenulvl = dataProvider.getValue(curr.dataRow, 'menulevel');
+		if(currMenulvl==4) {return;}
+		if(currTreeNodeParent==null|| currTreeNodeParent=="") {return;}
+
+console.log("currTreeNodeParent = "+currTreeNodeParent);
+console.log("btnInsertClickHandler curr="+curr.itemIndex);	
+//console.log("자식 IDS::dataProvider.getDescendants="+dataProvider.getDescendants(curr.dataRow));
+		var childNo = dataProvider.getDescendants(curr.dataRow);
+console.log('childNo : '+childNo);		
+		if(childNo==null) {return;}
+		var result = findMinAndMax(childNo);
+console.log('result.min : '+result.min);
+console.log('result.max : '+result.max);
+		// 해당 자손의 orderNo 값 조회.
+		var lastLvlNo = dataProvider.getValue(result.max, 'menuLevel');
+		var lastNo = dataProvider.getValue(result.max, 'orderNo');
+console.log('lastLvlNo : '+lastLvlNo);	
+console.log('orderNo : '+lastNo);
+        // row 추가.
 		dataProvider.addChildRow(
-	      curr.dataRow,     // parent rowId
-		  [-1, "Insert 노드"]
-		);		
+		   curr.dataRow,     // parent rowId
+		   //[{"menuName":"Insert 노드","menulevel":lastLvlNo,"orderNo":lastNo}]
+		   ['menuName',"Insert 노드"]
+		);
+		grdMain.setFocus();		
 		
+		
+/*
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "/getLastOrderNo.do",
+			data : {'treeNodeParent':currTreeNodeParent},
+			success : function(data){
+				console.log(JSON.stringify(data));
+				setOrderNo = data.orderNo;
+				setMenuLevel = data.menuLevel;
+				console.log(">>> setOrderNo : " + setOrderNo);
+				console.log(">>> setMenuLevel : " + setMenuLevel);				
+				
+				dataProvider.addChildRow(
+		          curr.dataRow,     // parent rowId
+				  ["menuName","Append 노드"]
+                );
+			    grdMain.setFocus();				
+			},
+			error : function(xhr, status, error){
+				alert(error);
+			}
+		});
+*/		
+		//[{"menuName":"Append 노드","menuLevel":lastLvlNo,"orderNo":lastNo+1}]		
 		
 		
 	}
@@ -175,13 +272,48 @@ console.log("btnInsertClickHandler curr="+curr.itemIndex);
 		grdMain.setFocus();
 		*/
 		// 최상위 노드에 행 추가
+		var setOrderNo;
+		var setMenuLevel;		
         var curr = grdMain.getCurrent();
-console.log("btnAppendClickHandler curr="+curr.itemIndex);		
+		var currTreeNodeParent = dataProvider.getValue(curr.dataRow, 'treeNodeParent');
+		var currMenulvl = dataProvider.getValue(curr.dataRow, 'menulevel');
+		if(currMenulvl==4) {return;}
+		if(currTreeNodeParent==null|| currTreeNodeParent=="") {return;}
+
+console.log("currTreeNodeParent = "+currTreeNodeParent);
+console.log("btnAppendClickHandler curr="+curr.itemIndex);
+	    // 조회.
+/*
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "/getLastOrderNo.do",
+			data : {'treeNodeParent':currTreeNodeParent},
+			success : function(data){
+				console.log(JSON.stringify(data));
+				setOrderNo = data.orderNo;
+				setMenuLevel = data.menuLevel;
+				console.log(">>> setOrderNo : " + setOrderNo);
+				console.log(">>> setMenuLevel : " + setMenuLevel);				
+				
+				dataProvider.addChildRow(
+		          curr.dataRow,     // parent rowId
+				  ["menuName","Append 노드"]
+                );
+			    grdMain.setFocus();				
+			},
+			error : function(xhr, status, error){
+				alert(error);
+			}
+		});
+*/	    
+	    
 		dataProvider.addChildRow(
-          curr.dataRow,     // parent rowId
-		  ["menuName","Append 노드"]
-		);
-		grdMain.setFocus();
+		          curr.dataRow,     // parent rowId
+				  ["menuName","Append 노드"]
+              );
+			    grdMain.setFocus();		    
+	    
 	}
 	
 	function btnDeleteClickHandler(e) {
@@ -290,6 +422,65 @@ console.log(">>> jRowData = " + JSON.stringify(jRowData));
 			}
 		});
 	}
+	
+	function btnGetRowDataClickHandler(e) {
+		var currRow = grdMain.getCurrent().dataRow;
+		//var currItemIdx = grdMain.getCurrent().itemIndex;
+		if (currRow < 0)
+			return;
+console.log("getCurrent : " + JSON.stringify(grdMain.getCurrent()));		
+console.log("currRow : " + currRow);		
+console.log("dataProvider.getValue : " + dataProvider.getValues(currRow));
+        var currMenuNm = dataProvider.getValue(currRow, 'menuName');
+		var currLvl = dataProvider.getValue(currRow, 'menuLevel');
+		var currNo = dataProvider.getValue(currRow, 'orderNo');
+console.log("currMenuNm : " + currMenuNm);		
+console.log("currLvl : " + currLvl);
+console.log("currNo : " + currNo);
+
+        var rowIds = dataProvider.getAncestors(currRow);
+        if(!rowIds.length) return;
+console.log(">>> 부모 rowIds : " + rowIds);        
+        
+
+	}
+	//https://docs.realgrid.com/guides/crud/get-values#gsc.tab=0 참고.
+	//http://help.realgrid.com/tutorial/b9-5/ <= 자식 조회.
+	function btnSearchDataClickHandler() {
+		var searchData = "0.001.001.003";
+		// 최상위 부모 id
+		var parentIds = dataProvider.getChildren(-1);
+console.log(">>> parentIds : " + parentIds);
+		
+		for (var i in parentIds) {
+			var descendantIds = dataProvider.getDescendants(parentIds[i]);
+			
+			//var fldLvlData = dataProvider.getValue(descendantIds[i], 'menulvl');
+			//var fldNoData = dataProvider.getValue(descendantIds[i], 'orderNo');
+			var fldNameData = dataProvider.getValue(descendantIds[i], 'menuName');
+			
+			//if (currLvl == fldLvlData && currNo == fldNoData) {
+            if (searchData == fldNameData) {				
+				var ancestorIds = dataProvider.getAncestors(descendantIds[i]);
+console.log(">>> ancestorIds.length : " + ancestorIds.length);				
+				
+                for(var k = ancestorIds.length - 1 ; k >= 0 ; k--) {
+                	console.log(">>> ancestorIds : " + ancestorIds[k]);                	
+                    var itemIndex = grdMain.getItemIndex[ancestorIds[k]];
+					console.log(">>> intemIndex : " + itemIndex);                 
+                } 				
+			}
+		}
+		
+	}
+		
+	function btnGetAncestors(){
+		var curDataRow = grdMain.getCurrent().dataRow;
+		var rowIds = dataProvider.getAncestors(curDataRow);
+		if(!rowIds.length) rowIds = "부모가 없는 행입니다.";
+		alert(rowIds);
+	}		
+	
 </script>
 </head>
 <body>
@@ -304,5 +495,7 @@ console.log(">>> jRowData = " + JSON.stringify(jRowData));
 	<input type="button" id="btnDelete" value="Delete Row" />
 	<input type="button" id="btnSaveData" value="Save Data" />
 	<input type="button" id="btnSaveAllData" value="Save All Data" />
+	<input type="button" id="btnGetRowData" value="getRowData" />
+	<input type="button" id="btnSearchData" value="getSearchData" />
 </body>
 </html>

@@ -5,20 +5,35 @@
 
 	<insert id="addMenu" parameterType="menu" >
 		INSERT INTO Menu 
-		VALUES(#{treeNode},#{menuName},#{auth})
+		VALUES(#{treeNode},#{treeNodeParent},#{menuName},#{auth},#{menuLevel},#{orderNo})
 	</insert>
 	
 	<update id="updateMenu" parameterType="menu" >
 		UPDATE Menu
 		SET 
 			menuName = #{menuName},
-			auth = #{auth}
+			auth = #{auth},
+			menuLevel = #{menuLevel},
+			orderNo = #{orderNo}
 		WHERE treeNode = #{treeNode}
+		  AND treeNodeParent = #{treeNodeParent}
 	</update>
 	
-	<delete id="delMenu" parameterType="String" >
+	<delete id="delMenu" parameterType="menu" >
 		DELETE Menu
-		WHERE treeNode = #{treeNode}
+		WHERE treeNode = #{treeNode} and treeNodeParent = #{treeNodeParent}
 	</delete>
+	
+	<select id="getLastOrderNo" parameterType="map" resultType="map">
+		SELECT TOP 1
+		       treeNode
+		     , MAX(menuLevel) as menuLevel
+		     , MAX(orderNo) as orderNo
+		  FROM Menu
+		 WHERE 1=1
+		   AND treeNodeParent = #{treeNodeParent}
+       GROUP BY treeNode, menuLevel, orderNo
+       ORDER BY orderNo DESC
+	</select>
 	
 </mapper>

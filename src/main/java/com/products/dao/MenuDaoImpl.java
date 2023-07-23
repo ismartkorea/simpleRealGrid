@@ -1,6 +1,7 @@
 package com.products.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,8 +25,12 @@ public class MenuDaoImpl implements MenuDao {
 		return menuMapper.updateMenu(menu);
 	}
 	
-	public int delMenu(String treeNode) {
-		return menuMapper.delMenu(treeNode);
+	public int delMenu(MenuModel menu) {
+		return menuMapper.delMenu(menu);
 	}
+	
+	public Map<String, Object> getLastOrderNo(Map<String, Object> params) {
+		return menuMapper.getLastOrderNo(params);
+	}	
 
 }
