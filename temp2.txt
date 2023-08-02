@@ -1,0 +1,42 @@
+// 간단한 배열 데이터 예시
+const dataForGrid1 = [
+  { id: 1, name: 'John', age: 30 },
+  { id: 2, name: 'Jane', age: 25 },
+  { id: 3, name: 'Mike', age: 28 },
+  // 추가적인 데이터들...
+];
+
+const dataForGrid2 = [
+  { id: 4, name: 'Emily', age: 32 },
+  { id: 5, name: 'Jane', age: 25 },
+  // 추가적인 데이터들...
+];
+
+// 중복을 제외하고 배열 변수에 push하는 함수
+function pushNonDuplicateData(grid1Data, grid2Data, destinationArray) {
+  for (var i = 0; i < grid1Data.length; i++) {
+    var isDuplicate = false;
+    for (var j = 0; j < grid2Data.length; j++) {
+      // 여기에서 중복 체크 조건을 정의합니다. 예를 들어, id 필드가 같은 경우 중복으로 간주합니다.
+      if (grid1Data[i].id === grid2Data[j].id) {
+        isDuplicate = true;
+        break;
+      }
+    }
+
+    if (!isDuplicate) {
+      destinationArray.push(grid1Data[i]);
+    }
+  }
+}
+
+// 중복을 제외하고 데이터 push 수행
+const nonDuplicateItems = [];
+pushNonDuplicateData(dataForGrid1, dataForGrid2, nonDuplicateItems);
+console.log(nonDuplicateItems);
+
+
+
+위 코드에서 pushNonDuplicateData 함수는 중복을 제외하고 데이터를 destinationArray에 push합니다. 중복 체크 조건은 grid1Data[i].id === grid2Data[j].id로 간단하게 설정하였으며, 중복이 아닌 경우에만 destinationArray에 push합니다.
+
+이제 nonDuplicateItems 배열에 중복을 제외한 데이터가 담겨져 있을 것입니다. 실제 사용 시에는 중복 체크 조건을 데이터 구조에 맞게 수정해야 합니다.
