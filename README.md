@@ -1,5 +1,4 @@
 # simpleRealGrid
-RealGrid Sample
 // 두 개의 그리드 생성
 const grid1 = new RealGrid.Grid({ /* grid1의 설정 옵션 */ });
 const grid2 = new RealGrid.Grid({ /* grid2의 설정 옵션 */ });
@@ -27,6 +26,13 @@ const dataForGrid1 = [
   { id: 2, name: 'Jane', age: 25 },
   // 추가적인 데이터들...
 ];
+
+grid1.setDataSource(dataForGrid1);
+
+// 그리드1에서 행 추가 시 중복 체크 수행
+// 여기에서 rowIndex는 그리드1의 특정 행을 추가했을 때의 인덱스입니다.
+const rowIndexToAdd = 1; // 예시로 1번째 행을 추가하는 경우
+addRowToGrid2IfNotDuplicate(grid1, grid2, rowIndexToAdd);
 
 grid1.setDataSource(dataForGrid1);
 
